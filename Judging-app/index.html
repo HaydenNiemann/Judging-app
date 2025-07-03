@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Judging Form</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <button class="loginBtn" onclick="location.href='results.html'">Admin Login</button>
+
+  <h2 class="main-heading">Presenter Judging Form</h2>
+
+  <label>
+    Judge Name:
+    <input type="text" id="judgeName" required placeholder="e.g. Lena Smith" minlength="1" />
+  </label>
+
+  <form id="judgingForm">
+    <label>
+      Select Presenter:
+      <select id="presenterSelect" required>
+        <option value="">-- Select Presenter --</option>
+        <option value="Jane Doe">Jane Doe</option>
+        <option value="John Smith">John Smith</option>
+        <option value="Emily Brown">Emily Brown</option>
+        <option value="Michael Lee">Michael Lee</option>
+        <option value="Sophia Kim">Sophia Kim</option>
+      </select>
+    </label>
+
+    <label>Category 1:
+      <select id="cat1" required>
+        <option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+    </label>
+    <label>Category 2:
+      <select id="cat2" required>
+        <option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+    </label>
+    <label>Category 3:
+      <select id="cat3" required>
+        <option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+    </label>
+    <label>Category 4:
+      <select id="cat4" required>
+        <option value="">-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
+      </select>
+    </label>
+
+    <button class="main-button" type="submit">Submit Scores</button>
+  </form>
+
+  <!-- External JS (Firebase SDK must come first) -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>

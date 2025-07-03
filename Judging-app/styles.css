@@ -1,0 +1,170 @@
+/* ===== Global Reset ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+/* ===== Layout Container ===== */
+main {
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* ===== Form Styling ===== */
+form {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Headings ===== */
+h2, h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+/* ===== Form Labels & Inputs ===== */
+label {
+  display: block;
+  margin-top: 1.2rem;
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* ===== Button Styling ===== */
+.main-button {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  font-size: 1.2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.main-button:hover {
+  background-color: #0056b3;
+}
+
+/* ===== Table (Results Page) ===== */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+
+table {
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+
+.loginBtn {
+  float: right;
+  margin-top: 1px;
+  margin-right: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  z-index: 2;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.loginBtn.clicked {
+  background-color: darkgreen !important;
+}
+
+
+.loginBtn:active {
+  background-color: #004d00; /* darker green */
+}
+
+
+
+
+.main-heading {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+
+
+/* ===== Responsive Mobile ===== */
+@media (max-width: 600px) {
+  main {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  form {
+    padding: 1.2rem;
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  h2, h3 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  select {
+    padding: 1.2rem;
+    font-size: 1.2rem;
+  }
+
+  label {
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1.3rem;
+    padding: 1.2rem;
+  }
+
+  table {
+    font-size: 0.95rem;
+  }
+}
+

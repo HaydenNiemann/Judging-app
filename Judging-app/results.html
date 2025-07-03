@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Results</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h2>Live Judging Results (Grouped by Presenter)</h2>
+
+  <!-- Login area -->
+  <div id="loginSection">
+    <h3>Login to view results</h3>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button class="main-button" id="loginBtn">Login</button>
+  </div>
+
+  <!-- Results area -->
+  <div id="resultsContainer" style="display:none;"></div>
+
+  <!-- App logic -->
+  <script type="module" src="results.js"></script>
+</body>
+</html>
