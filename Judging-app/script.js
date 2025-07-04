@@ -19,9 +19,16 @@ const form = document.getElementById('judgingForm');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
+  const judgeName = document.getElementById('judgeName').value.trim();
+
+  // ✅ Validate first and last name (must have space)
+  if (!/^\S+\s+\S+/.test(judgeName)) {
+    showMessage("⚠️ Please enter both first and last name.");
+    return;
+  }
+
   const fullName = document.getElementById('presenterSelect').value;
   const [firstName, lastName] = fullName.split(" ");
-  const judgeName = document.getElementById('judgeName').value;
 
   const scoreData = {
     firstName,
@@ -38,10 +45,22 @@ form.addEventListener('submit', async (e) => {
 
   try {
     await addDoc(collection(db, "scores"), scoreData);
-    alert('Score submitted!');
+    showMessage("✅ Score submitted!");
     form.reset();
   } catch (error) {
     console.error("Error submitting score:", error);
-    alert('Something went wrong. Please try again.');
+    showMessage("❌ Something went wrong. Please try again.");
   }
 });
+
+function showMessage(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.remove("hidden");
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    toast.classList.add("hidden");
+  }, 3000);
+}

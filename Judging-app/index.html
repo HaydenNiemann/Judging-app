@@ -13,8 +13,8 @@
   <h2 class="main-heading">Presenter Judging Form</h2>
 
   <label>
-    Judge Name:
-    <input type="text" id="judgeName" required placeholder="e.g. Lena Smith" minlength="1" />
+    Judge First & Last Name:
+    <input type="text" id="judgeName" required placeholder="e.g. John Smith" minlength="1" />
   </label>
 
   <form id="judgingForm">
@@ -51,7 +51,10 @@
       </select>
     </label>
 
-    <button class="main-button" type="submit">Submit Scores</button>
+    <button class="main-button" type="submit">Submit Scores</button> 
+    <div id="toast" class="hidden">Score submitted!</div>
+    
+
   </form>
 
   <!-- External JS (Firebase SDK must come first) -->
