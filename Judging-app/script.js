@@ -59,8 +59,12 @@ function showMessage(message) {
   toast.classList.remove("hidden");
   toast.classList.add("show");
 
+  // 👇 Scroll the toast into view
+  toast.scrollIntoView({ behavior: "smooth", block: "center" });
+
   setTimeout(() => {
     toast.classList.remove("show");
     toast.classList.add("hidden");
-  }, 3000);
+  }, 3000); // Show for 3 seconds
 }
+
