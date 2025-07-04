@@ -65,6 +65,6 @@ function showMessage(message) {
   setTimeout(() => {
     toast.classList.remove("show");
     toast.classList.add("hidden");
-  }, 3000); // Show for 3 seconds
+  }, 4000); // Show for 4 seconds
 }
 
