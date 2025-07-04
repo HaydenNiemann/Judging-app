@@ -129,24 +129,23 @@ th {
 }
 
 #toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
   background-color: #28a745;
   color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  font-size: 1rem;
-  z-index: 1000;
+  font-weight: bold;
+  transition: opacity 0.3s ease;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  visibility: hidden;
 }
 
 #toast.show {
   opacity: 1;
+  visibility: visible;
 }
+
 
 .hidden {
   display: none;
