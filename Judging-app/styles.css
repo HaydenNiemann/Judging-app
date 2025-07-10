@@ -42,7 +42,8 @@ input, select {
 /* ===== Buttons ===== */
 .main-button,
 .loginBtn {
-  padding: 1rem;
+  margin-top: 0.1rem;
+  margin-right: .1rem;
   font-size: 1.2rem;
   border: none;
   border-radius: 6px;
@@ -96,9 +97,14 @@ th {
 }
 
 /* ===== Other UI Elements ===== */
+.page-header {
+  position: relative;
+  padding-top: 2rem;
+}
+
 .main-heading {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 0rem;
   font-size: 2rem;
 }
 #toast {
