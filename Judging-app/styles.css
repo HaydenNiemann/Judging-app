@@ -127,6 +127,66 @@ th {
   display: none;
 }
 
+/* Scoring Guidelines Box */
+.guidelines {
+  background: #eef6ff;
+  border: 1px solid #bcdfff;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+/* Overall Card Styling */
+.category-card {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Header (Category Title + Criteria) */
+.criteria-header h4 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.criteria-header p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Score Selector Section */
+.score-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-section label {
+  font-weight: bold;
+}
+
+.score-section select {
+  width: 12rem;
+  padding: 6px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #aaa;
+}
+
+
+
+
+
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
   main, form {

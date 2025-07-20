@@ -37,8 +37,7 @@ form.addEventListener('submit', async (e) => {
     scores: {
       cat1: parseInt(document.getElementById('cat1').value),
       cat2: parseInt(document.getElementById('cat2').value),
-      cat3: parseInt(document.getElementById('cat3').value),
-      cat4: parseInt(document.getElementById('cat4').value)
+      cat3: parseInt(document.getElementById('cat3').value)
     },
     timestamp: new Date()
   };
@@ -67,4 +66,3 @@ function showMessage(message) {
     toast.classList.add("hidden");
   }, 4000); // Show for 4 seconds
 }
-

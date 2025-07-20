@@ -16,13 +16,13 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyDAyKB2ssAwZwoEajlTOy5WzIWqqUoZgJQ",
   authDomain: "judging-site.firebaseapp.com",
-  projectId:  "judging-site",
+  projectId: "judging-site",
   storageBucket: "judging-site.appspot.com",
   messagingSenderId: "174651417081",
   appId: "1:174651417081:web:f7ec8a824593ab363f5d28"
 };
-const app  = initializeApp(firebaseConfig);
-const db   = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const auth = getAuth(app);
 
 /* ---------- Allowed users (hard-coded) ---------- */
@@ -32,10 +32,10 @@ const allowedEmails = [
 ];
 
 /* ---------- DOM references ---------- */
-const emailInput       = document.getElementById("email");
-const passwordInput    = document.getElementById("password");
-const loginBtn         = document.getElementById("loginBtn");
-const loginSection     = document.getElementById("loginSection");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const loginSection = document.getElementById("loginSection");
 const resultsContainer = document.getElementById("resultsContainer");
 
 /* ---------- Login button ---------- */
@@ -50,15 +50,16 @@ loginBtn.addEventListener("click", async () => {
 /* ---------- Auth state listener ---------- */
 onAuthStateChanged(auth, (user) => {
   if (user && allowedEmails.includes(user.email)) {
-    loginSection.style.display  = "none";
+    loginSection.style.display = "none";
     resultsContainer.style.display = "block";
     loadResults();
   } else {
-    if (user) {             // logged in but not authorised
+    if (user) {
+      // logged in but not authorised
       alert("Access denied.");
       signOut(auth);
     }
-    loginSection.style.display  = "block";
+    loginSection.style.display = "block";
     resultsContainer.style.display = "none";
   }
 });
@@ -69,7 +70,7 @@ function loadResults() {
     const grouped = {};
     snapshot.forEach((d) => {
       const data = d.data();
-      const key  = `${data.firstName} ${data.lastName}`;
+      const key = `${data.firstName} ${data.lastName}`;
       (grouped[key] ||= []).push(data);
     });
 
@@ -92,13 +93,12 @@ function loadResults() {
         const c1 = e.scores?.cat1 ?? 0;
         const c2 = e.scores?.cat2 ?? 0;
         const c3 = e.scores?.cat3 ?? 0;
-        const c4 = e.scores?.cat4 ?? 0;
-        const entryTotal = c1 + c2 + c3 + c4;
+        const entryTotal = c1 + c2 + c3;
         totalScore += entryTotal;
 
         return `
           <tr>
-            <td>${c1}</td><td>${c2}</td><td>${c3}</td><td>${c4}</td>
+            <td>${c1}</td><td>${c2}</td><td>${c3}</td>
             <td>${new Date(e.timestamp.seconds * 1000).toLocaleString()}</td>
             <td>${e.judge ?? "Unknown"}</td>
           </tr>`;
@@ -111,7 +111,7 @@ function loadResults() {
            <table>
              <thead>
                <tr>
-                 <th>Cat&nbsp;1</th><th>Cat&nbsp;2</th><th>Cat&nbsp;3</th><th>Cat&nbsp;4</th>
+                 <th>Poster</th><th>Scientific</th><th>Presentation</th>
                  <th>Submitted</th><th>Judge</th>
                </tr>
              </thead>
@@ -124,7 +124,7 @@ function loadResults() {
       section.insertAdjacentHTML(
         "beforeend",
         `<p style="font-weight:bold;text-align:center;margin-top:0.4rem">
-           Total Score: ${totalScore} (${scores.length} Judge${scores.length!==1?'s':''})
+           Total Score: ${totalScore} (${scores.length} Judge${scores.length !== 1 ? 's' : ''})
          </p>`
       );
 
@@ -132,13 +132,13 @@ function loadResults() {
       presenterTotals[presenter] = totalScore;
     });
 
-    /* ---------- Winner banner ---------- */
+    /* ---------- Winner banner (lowest score wins) ---------- */
     if (Object.keys(presenterTotals).length) {
-      const max = Math.max(...Object.values(presenterTotals));
-      const winners = Object.keys(presenterTotals).filter(p => presenterTotals[p] === max);
+      const min = Math.min(...Object.values(presenterTotals));
+      const winners = Object.keys(presenterTotals).filter(p => presenterTotals[p] === min);
       const bannerText = winners.length === 1
-        ? `🏆 Highest Score: ${winners[0]} (${max})`
-        : `🏆 Highest Score (Tie): ${winners.join(", ")} (${max})`;
+        ? `🏆 Best Score: ${winners[0]} (Score: ${min})`
+        : `🏆 Best Score (Tie): ${winners.join(", ")} (Score: ${min})`;
 
       const banner = document.createElement("div");
       banner.style.cssText = "margin:3rem auto 1rem;text-align:center;font-size:1.25rem;font-weight:bold;";
