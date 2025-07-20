@@ -23,7 +23,7 @@ form.addEventListener('submit', async (e) => {
 
   // ✅ Validate first and last name (must have space)
   if (!/^\S+\s+\S+/.test(judgeName)) {
-    showMessage("⚠️ Please enter both first and last name.");
+    showMessage("⚠️ Please enter Judge's first and last name.");
     return;
   }
 
