@@ -8,7 +8,9 @@ import {
 import {
   getFirestore,
   collection,
-  onSnapshot
+  onSnapshot,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ✅ Firebase config
@@ -52,18 +54,18 @@ onAuthStateChanged(auth, (user) => {
   if (user && allowedEmails.includes(user.email)) {
     loginSection.style.display = "none";
     resultsContainer.style.display = "block";
-    loadResults();
+    loadResults(true);
+  } else if (user) {
+    loginSection.style.display = "none";
+    resultsContainer.style.display = "block";
+    loadResults(false);
   } else {
-    if (user) {
-      alert("Access denied.");
-      signOut(auth);
-    }
     loginSection.style.display = "block";
     resultsContainer.style.display = "none";
   }
 });
 
-// ✅ Normalize category (handles variations like RTP_AH → postdoc)
+// ✅ Normalize category
 function normalizeCategory(raw) {
   raw = (raw || "").toLowerCase();
   if (raw.includes("student")) return "student";
@@ -71,14 +73,27 @@ function normalizeCategory(raw) {
   return "unknown";
 }
 
+// ✅ Winner text logic with tie handling
+function winnerText(catTotals) {
+  if (!catTotals || Object.keys(catTotals).length === 0) return `No scores`;
+
+  const min = Math.min(...Object.values(catTotals));
+  const winners = Object.keys(catTotals).filter(p => catTotals[p] === min);
+
+  return winners.length === 1
+    ? `Winner → ${winners[0]} (Score: ${min})`
+    : `Winners → ${winners.join(", ")} (Score: ${min})`;
+}
+
 // ✅ Load results and calculate winners
-function loadResults() {
+function loadResults(isAdmin) {
   onSnapshot(collection(db, "scores"), (snapshot) => {
     const grouped = {};
     const categoryTotals = { student: {}, postdoc: {} };
 
     snapshot.forEach((d) => {
       const data = d.data();
+      data.id = d.id; // Store doc ID for delete
       const key = `${data.firstName} ${data.lastName}`;
       (grouped[key] ||= []).push(data);
     });
@@ -113,6 +128,7 @@ function loadResults() {
             <td>${c1}</td><td>${c2}</td><td>${c3}</td>
             <td>${timeString}</td>
             <td>${e.judge ?? "Unknown"}</td>
+            ${isAdmin ? `<td><button class="delete-btn" data-id="${e.id}">🗑 Delete</button></td>` : ""}
           </tr>`;
       }).join("");
 
@@ -124,6 +140,7 @@ function loadResults() {
                <tr>
                  <th>Poster</th><th>Scientific</th><th>Presentation</th>
                  <th>Submitted</th><th>Judge</th>
+                 ${isAdmin ? "<th>Action</th>" : ""}
                </tr>
              </thead>
              <tbody>${rows}</tbody>
@@ -148,26 +165,28 @@ function loadResults() {
       }
     });
 
-    // ✅ Calculate winners (lowest score wins)
+    // ✅ Banner with symbols
     const banner = document.createElement("div");
     banner.style.cssText = "margin:3rem auto 1rem;text-align:center;font-size:1.25rem;font-weight:bold;";
-
-    function winnerText(catTotals) {
-      if (!catTotals || Object.keys(catTotals).length === 0) return `No scores`;
-
-      const min = Math.min(...Object.values(catTotals));
-      const winners = Object.keys(catTotals).filter(p => catTotals[p] === min);
-
-      return winners.length === 1
-        ? `Winner → ${winners[0]} (Score: ${min})`
-        : `Winners → ${winners.join(", ")} (Score: ${min})`;
-    }
-
     banner.innerHTML = `
       🏆 Student ${winnerText(categoryTotals.student)}<br>
       🏆 RTP_AH ${winnerText(categoryTotals.postdoc)}
     `;
-
     resultsContainer.appendChild(banner);
   });
 }
+
+// ✅ Delete button event listener
+resultsContainer.addEventListener('click', async (e) => {
+  if (e.target.classList.contains('delete-btn')) {
+    const docId = e.target.getAttribute('data-id');
+    if (confirm("Are you sure you want to delete this score?")) {
+      try {
+        await deleteDoc(doc(db, "scores", docId));
+        alert("Score deleted successfully");
+      } catch (err) {
+        console.error("Error deleting score:", err);
+      }
+    }
+  }
+});

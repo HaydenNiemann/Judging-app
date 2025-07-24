@@ -21,7 +21,7 @@ form.addEventListener('submit', async (e) => {
 
   const judgeName = document.getElementById('judgeName').value.trim();
   if (!/^\S+\s+\S+/.test(judgeName)) {
-    showMessage("⚠️ Please enter both first and last name.");
+    showMessage("⚠️ Please enter your full name (first and last).");
     return;
   }
 
