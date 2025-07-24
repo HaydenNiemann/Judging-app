@@ -20,19 +20,29 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const judgeName = document.getElementById('judgeName').value.trim();
-
-  // ✅ Validate first and last name (must have space)
   if (!/^\S+\s+\S+/.test(judgeName)) {
-    showMessage("⚠️ Please enter Judge's first and last name.");
+    showMessage("⚠️ Please enter both first and last name.");
     return;
   }
 
   const fullName = document.getElementById('presenterSelect').value;
+  if (!fullName) {
+    showMessage("⚠️ Please select a presenter.");
+    return;
+  }
+
+  const category = window.getPresenterCategory(fullName);
+  if (!category) {
+    showMessage("⚠️ Could not determine presenter category.");
+    return;
+  }
+
   const [firstName, lastName] = fullName.split(" ");
 
   const scoreData = {
     firstName,
     lastName,
+    category,
     judge: judgeName,
     scores: {
       cat1: parseInt(document.getElementById('cat1').value),
@@ -46,6 +56,7 @@ form.addEventListener('submit', async (e) => {
     await addDoc(collection(db, "scores"), scoreData);
     showMessage("✅ Score submitted!");
     form.reset();
+    $('#presenterSelect').val('').trigger('change');
   } catch (error) {
     console.error("Error submitting score:", error);
     showMessage("❌ Something went wrong. Please try again.");
@@ -58,11 +69,10 @@ function showMessage(message) {
   toast.classList.remove("hidden");
   toast.classList.add("show");
 
-  // 👇 Scroll the toast into view
   toast.scrollIntoView({ behavior: "smooth", block: "center" });
 
   setTimeout(() => {
     toast.classList.remove("show");
     toast.classList.add("hidden");
-  }, 4000); // Show for 4 seconds
+  }, 4000);
 }
