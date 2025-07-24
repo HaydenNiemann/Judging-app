@@ -51,11 +51,11 @@ input, select {
 }
 .main-button {
   margin-top: 1.5rem;
-  background: #007bff;
+  background: #28a745;
   color: #fff;
 }
 .main-button:hover {
-  background: #0056b3;
+  background: #218838;
 }
 .loginBtn {
   position: absolute;
@@ -63,7 +63,7 @@ input, select {
   right: 0;
   padding: 0.35rem 0.7rem;
   font-size: 0.85rem;
-  background: green;
+  background: #007bff;
   color: #fff;
   border-radius: 4px;
   z-index: 2;
@@ -73,6 +73,10 @@ input, select {
 }
 .loginBtn:active {
   background: #004d00;
+}
+
+.loginBtn:hover {
+  background: #0056b3;
 }
 
 /* ===== Table ===== */
