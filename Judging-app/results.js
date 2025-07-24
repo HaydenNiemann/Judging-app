@@ -180,13 +180,37 @@ function loadResults(isAdmin) {
 resultsContainer.addEventListener('click', async (e) => {
   if (e.target.classList.contains('delete-btn')) {
     const docId = e.target.getAttribute('data-id');
-    if (confirm("Are you sure you want to delete this score?")) {
-      try {
-        await deleteDoc(doc(db, "scores", docId));
-        alert("Score deleted successfully");
-      } catch (err) {
-        console.error("Error deleting score:", err);
+
+    Swal.fire({
+      title: 'Delete Score?',
+      text: "This action cannot be undone.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteDoc(doc(db, "scores", docId));
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted!',
+            text: 'The score has been removed.',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } catch (err) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to delete score. Try again.'
+          });
+          console.error("Error deleting score:", err);
+        }
       }
-    }
+    });
   }
 });
+
