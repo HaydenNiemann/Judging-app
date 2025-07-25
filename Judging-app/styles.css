@@ -171,21 +171,25 @@ th {
 /* Score Selector Section */
 .score-section {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: center; /* Align vertically in the center */
+  gap: 12px; /* Space between label and dropdown */
+  margin-top: 10px;
 }
 
 .score-section label {
   font-weight: bold;
+  font-size: 1rem;
+  margin: 0; /* Remove extra margin */
 }
 
 .score-section select {
-  width: 80%;
-  padding: 6px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid #aaa;
+  line-height: normal; /* Prevents height mismatch */
 }
+
 
 /* Delete Button */
 .delete-btn {
